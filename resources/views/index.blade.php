@@ -273,7 +273,7 @@
                             <div class="action-links">
                                 <a href="/index/{{ $student->id }}" class="action-btn view-btn">View</a>
 
-                                <a href="#" class="action-btn edit-btn">Edit</a>
+                                <a href="/edit/{{ $student->id }}" class="action-btn edit-btn">Edit</a>
 
                                 <form action="/index/{{ $student->id }}" method="POST" style="display:inline;">
                                     @csrf

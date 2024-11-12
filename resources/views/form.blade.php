@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -200,9 +201,9 @@
                 margin-bottom: 10px;
             }
         }
-
     </style>
 </head>
+
 <body>
 
     <div class="container">
@@ -215,7 +216,13 @@
                     <p>{{$student->fname}}'s Son/Daughter</p>
                 </div>
                 <!-- Dummy Image -->
-                <img src="https://via.placeholder.com/120" alt="Student Image">
+                @if($student->gender == 'male')
+                <img src="https://via.placeholder.com/120/0000FF/FFFFFF?text=Male" alt="Male Avatar">
+                @elseif($student->gender == 'female')
+                <img src="https://via.placeholder.com/120/FF69B4/FFFFFF?text=Female" alt="Female Avatar">
+                @else
+                <img src="https://via.placeholder.com/120/808080/FFFFFF?text=Other" alt="Other Avatar">
+                @endif
             </div>
 
             <div class="student-details-body">
@@ -232,17 +239,20 @@
                 </div>
 
                 <div class="row">
-                    <p><strong>Created At:</strong> {{ \Carbon\Carbon::parse($student->created_at)->format('M d, Y h:i A') }}</p>
-                    <p><strong>Last Updated:</strong> {{ \Carbon\Carbon::parse($student->updated_at)->format('M d, Y h:i A') }}</p>
+                    <p><strong>Created At:</strong> {{ \Carbon\Carbon::parse($student->created_at)->format('M d, Y h:i
+                        A') }}</p>
+                    <p><strong>Last Updated:</strong> {{ \Carbon\Carbon::parse($student->updated_at)->format('M d, Y h:i
+                        A') }}</p>
                 </div>
             </div>
 
             <div class="student-details-actions">
                 <a href="{{ url('index') }}" class="button primary">Back to Students</a>
-                <a href="#" class="button secondary">Edit Student</a>
+                <a href="/edit/{{ $student->id }}" class="button secondary">Edit Student</a>
             </div>
         </div>
     </div>
 
 </body>
+
 </html>
