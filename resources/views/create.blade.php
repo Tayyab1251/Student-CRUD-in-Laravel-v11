@@ -141,7 +141,7 @@
             <!-- Gender Selection -->
             <div class="form-group">
                 <label for="gender">Gender</label>
-                <select id="gender" name="gender" required>
+                <select id="gender" name="gender" >
                     <option value="">Select Gender</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>

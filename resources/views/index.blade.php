@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,7 +65,7 @@
             transition: all 0.3s ease;
             text-align: center;
             font-weight: 600;
-            text-decoration: none
+            text-decoration: none;
         }
 
         .add-btn:hover {
@@ -89,7 +90,8 @@
             overflow: hidden;
         }
 
-        th, td {
+        th,
+        td {
             padding: 12px;
             text-align: left;
         }
@@ -118,25 +120,81 @@
             margin-top: 20px;
         }
 
-        /* Action Links */
+        /* Action Buttons (View, Edit, Delete) */
         .action-links {
             display: flex;
-            gap: 15px;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
         }
 
-        .action-links a {
-            color: var(--primary-color);
+        /* General Button Styling */
+        .action-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            border-radius: 6px;
             text-decoration: none;
-            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+            display: inline-block;
+            border: 2px solid transparent;
         }
 
-        .action-links a:hover {
-            text-decoration: underline;
+        /* View Button */
+        .view-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .view-btn:hover {
+            background-color: darkgreen;
+            border-color: darkgreen;
+        }
+
+        /* Edit Button */
+        .edit-btn {
+            background-color: #f1c40f;
+            /* Yellow for Edit */
+            color: white;
+            border-color: #f1c40f;
+        }
+
+        .edit-btn:hover {
+            background-color: #f39c12;
+            border-color: #f39c12;
+        }
+
+        /* Delete Button */
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            border-color: #e74c3c;
+        }
+
+        .delete-btn:hover {
+            background-color: #c0392b;
+            border-color: #c0392b;
+        }
+
+        /* Remove underline and link styling for buttons */
+        .action-btn:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .action-btn:active {
+            background-color: #333;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            table, th, td {
+
+            table,
+            th,
+            td {
                 font-size: 0.9rem;
             }
         }
@@ -153,7 +211,8 @@
                 margin-top: 10px;
             }
 
-            th, td {
+            th,
+            td {
                 padding: 8px;
             }
 
@@ -164,7 +223,6 @@
             table {
                 font-size: 0.85rem;
             }
-
         }
 
         /* Scrollbar Styling */
@@ -182,8 +240,9 @@
         }
     </style>
 </head>
+
 <body>
-    
+
     <div class="header-container">
         <h1 class="title">Student Information</h1>
         {{-- <button class="add-btn">Add Student</button> --}}
@@ -206,25 +265,31 @@
                     <!-- Example row 1 -->
                     @foreach ($students as $student)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>  <!-- Automatically increments row number -->
+                        <td>{{ $loop->iteration }}</td> <!-- Automatically increments row number -->
                         <td>{{ $student->name }}</td>
                         <td>{{ $student->gender }}</td>
                         <td>{{ $student->phone }}</td>
                         <td>
                             <div class="action-links">
-                                <!-- View link with dynamic URL containing student ID -->
-                                <a href="/index/{{ $student->id }}">View</a>
-                                <a href="#">Edit</a>
-                                <a href="/index/{{ $student->id }}">Delete</a>
+                                <a href="/index/{{ $student->id }}" class="action-btn view-btn">View</a>
+
+                                <a href="#" class="action-btn edit-btn">Edit</a>
+
+                                <form action="/index/{{ $student->id }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="action-btn delete-btn">Delete</button>
+                                </form>
                             </div>
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
-                
+
             </table>
         </div>
     </div>
 
 </body>
+
 </html>
