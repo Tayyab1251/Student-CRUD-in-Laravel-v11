@@ -107,6 +107,11 @@
         .form-button:hover {
             background-color: darkgreen;
         }
+        .error-msg{
+            color: red;
+            font-size: 0.875rem; 
+            margin-top: 0.25rem;
+        }
 
         /* Media Queries for Responsiveness */
         @media (max-width: 768px) {
@@ -132,10 +137,16 @@
             <div class="form-group">
                 <label for="name">Full Name</label>
                 <input type="text" id="name" name="name" placeholder="Enter your full name" value="{{ old('name') }}" >
+                <span class="error-msg">@error('name')
+                    {{$message}}
+                @enderror</span>
             </div>
             <div class="form-group">
                 <label for="fname">Father's Name</label>
                 <input type="text" id="fname" name="fname" placeholder="Enter your father's name" value="{{ old('fname') }}" >
+                <span class="error-msg">@error('fname')
+                    {{$message}}
+                @enderror</span>
             </div>
 
             <!-- Gender Selection -->
@@ -147,22 +158,34 @@
                     <option value="female">Female</option>
                     <option value="other">Other</option>
                 </select>
+                <span class="error-msg">@error('gender')
+                    {{$message}}
+                @enderror</span>
             </div>
 
             <!-- Email and Phone in the same row -->
             <div class="form-group">
                 <label for="email">Email Address</label>
                 <input type="email" id="email" name="email" placeholder="Enter your email" value="{{ old('email') }}" >
+                <span class="error-msg">@error('email')
+                    {{$message}}
+                @enderror</span>
             </div>
             <div class="form-group">
                 <label for="phone">Phone Number</label>
                 <input type="text" id="phone" name="phone" placeholder="Enter your phone number" value="{{ old('phone') }}" >
+                <span class="error-msg">@error('phone')
+                    {{$message}}
+                @enderror</span>
             </div>
 
             <!-- Address -->
             <div class="form-group" style="flex: 1 1 100%;">
                 <label for="address">Address</label>
                 <textarea id="address" name="address" placeholder="Enter your address" value="{{ old('address') }}" ></textarea>
+                <span class="error-msg">@error('address')
+                    {{$message}}
+                @enderror</span>
             </div>
 
             <!-- Submit Button -->

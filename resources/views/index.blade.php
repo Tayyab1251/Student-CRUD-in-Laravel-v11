@@ -73,6 +73,47 @@
             border-color: darkgreen;
         }
 
+        /* Success alert */
+        .alert-success {
+            background-color: rgba(76, 175, 80, 0.15);
+            color: var(--primary-color);
+            padding: 15px 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 600px;
+            margin: 20px auto;
+            box-shadow: 0 4px 10px var(--shadow-light);
+            position: relative;
+        }
+
+        .alert-success .alert-icon {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .alert-success .close-btn {
+            background: none;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 2px 6px;
+            margin-left: auto;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .alert-success .close-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+
         /* Container for Centered Content */
         .container {
             max-width: 1200px;
@@ -242,12 +283,20 @@
 </head>
 
 <body>
-
     <div class="header-container">
         <h1 class="title">Student Information</h1>
         {{-- <button class="add-btn">Add Student</button> --}}
         <a href="/create " class="add-btn">Add Student</a>
     </div>
+    {{-- Alert --}}
+    @if (session('success'))
+    <div class="alert-success">
+        <span class="alert-icon">✓</span>
+        <span>{{ session('success') }}</span>
+        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+    </div>
+    @endif
+    
     <div class="container">
 
         <div class="table-container">
@@ -262,11 +311,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Example row 1 -->
                     @foreach ($students as $student)
                     <tr>
-                        <td>{{ $loop->iteration }}</td> <!-- Automatically increments row number -->
-                        <td>{{ $student->name }}</td>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ ucwords($student->name) }}</td>
                         <td>{{ $student->gender }}</td>
                         <td>{{ $student->phone }}</td>
                         <td>
@@ -289,7 +337,6 @@
             </table>
         </div>
     </div>
-
 </body>
 
 </html>

@@ -105,6 +105,11 @@
         .form-button:hover {
             background-color: darkgreen;
         }
+        .error-msg{
+            color: red;
+            font-size: 0.875rem; 
+            margin-top: 0.25rem;
+        }
 
         @media (max-width: 768px) {
             .form-group {
@@ -122,7 +127,6 @@
 <body>
     <div class="container">
         <h1>Edit Student Details</h1>
-        <!-- Updated the action URL to include the student ID -->
         <form method="POST" action="{{ url('edit/' . $student->id) }}">
             @method('PUT')
             @csrf
@@ -130,11 +134,17 @@
             <div class="form-group">
                 <label for="name">Full Name</label>
                 <input type="text" id="name" name="name" placeholder="Enter full name" value="{{ old('name', $student->name) }}">
+                <span class="error-msg">@error('name')
+                    {{$message}}
+                @enderror</span>
             </div>
 
             <div class="form-group">
                 <label for="fname">Father's Name</label>
                 <input type="text" id="fname" name="fname" placeholder="Enter father's name" value="{{ old('fname', $student->fname) }}">
+                <span class="error-msg">@error('fname')
+                    {{$message}}
+                @enderror</span>
             </div>
 
             <div class="form-group">
@@ -145,21 +155,33 @@
                     <option value="female" {{ old('gender', $student->gender) == 'female' ? 'selected' : '' }}>Female</option>
                     <option value="other" {{ old('gender', $student->gender) == 'other' ? 'selected' : '' }}>Other</option>
                 </select>
+                <span class="error-msg">@error('gender')
+                    {{$message}}
+                @enderror</span>
             </div>
 
             <div class="form-group">
                 <label for="email">Email Address</label>
                 <input type="email" id="email" name="email" placeholder="Enter email" value="{{ old('email', $student->email) }}">
+                <span class="error-msg">@error('email')
+                    {{$message}}
+                @enderror</span>
             </div>
 
             <div class="form-group">
                 <label for="phone">Phone Number</label>
                 <input type="text" id="phone" name="phone" placeholder="Enter phone number" value="{{ old('phone', $student->phone) }}">
+                <span class="error-msg">@error('phone')
+                    {{$message}}
+                @enderror</span>
             </div>
 
             <div class="form-group" style="flex: 1 1 100%;">
                 <label for="address">Address</label>
                 <textarea id="address" name="address" placeholder="Enter address">{{ old('address', $student->address) }}</textarea>
+                <span class="error-msg">@error('address')
+                    {{$message}}
+                @enderror</span>
             </div>
 
             <button type="submit" class="form-button">Update</button>

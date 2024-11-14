@@ -21,6 +21,12 @@ class StudentController extends Controller
             'email' => 'required|email|max:255',
             'address' => 'required|string|max:500',
             'gender' => 'required|string|in:male,female,other',
+        ],[
+            'name.required' => 'The name field is required.',
+            'fname.required' => 'The father’s name field is required.',
+            'email.required' => 'The email field is required.',
+            'address.required' => 'The address field is required.',
+            'gender.required' => 'Please select a gender.',
         ]);
 
         // Create a new student instance
@@ -35,7 +41,7 @@ class StudentController extends Controller
         $isSaved = $student->save();
 
         if ($isSaved) {
-            return redirect('index');
+            return redirect('index')->with('success', "{$student->name} Successfully Added!!");
         } else {
             return 'Operation Failed...';
         }
@@ -63,22 +69,19 @@ class StudentController extends Controller
     {
         $student = Student::destroy($id);
         if ($student) {
-            return redirect('index')->with('success', 'Student deleted successfully!');
+            return redirect('index');
         } else {
-            return redirect('index')->with('error', 'Error deleting student');
+            return redirect('index');
         }
     }
 
     // Function that loads the edit page form
     public function loadEditForm($id)
     {
-        // Find the student by ID, or throw a 404 if not found
         $student = Student::findOrFail($id);
-    
-        // Return the edit view with the student data
         return view('edit', compact('student'));
     }
-    
+
 
     // Fynction to update the values of the user with previous
 
@@ -92,29 +95,24 @@ class StudentController extends Controller
             'address' => 'required|string|max:500',
             'gender' => 'required|string|in:male,female,other',
         ]);
-    
+
         // Find the student by ID
         $student = Student::findOrFail($id);
-    
-        // Update the student attributes
+
         $student->name = $validated['name'];
         $student->fname = $validated['fname'];
         $student->email = $validated['email'];
-        $student->phone = $request->phone; // Ensure 'phone' field is passed in the form
+        $student->phone = $request->phone;
         $student->address = $validated['address'];
         $student->gender = $validated['gender'];
-    
+
         // Save the updated student
         $isUpdated = $student->save();
-    
-        // Redirect with success message if update is successful
+
         if ($isUpdated) {
-            return redirect()->route('index')->with('success', 'Student updated successfully.');
+            return redirect()->route('index');
         } else {
-            // If update failed, return with error message
-            return back()->with('error', 'Failed to update the student.');
+            return back();
         }
     }
-    
-    
 }
