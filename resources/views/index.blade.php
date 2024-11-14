@@ -112,6 +112,10 @@
             background-color: var(--primary-color);
             color: white;
         }
+        .deleted{
+            background-color:#ad5248;
+            color: #f1f1f1;
+        }
 
 
         /* Container for Centered Content */
@@ -283,6 +287,7 @@
 </head>
 
 <body>
+    {{-- {{print_r(session()->all())}} --}}
     <div class="header-container">
         <h1 class="title">Student Information</h1>
         {{-- <button class="add-btn">Add Student</button> --}}
@@ -296,7 +301,23 @@
         <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
     </div>
     @endif
-    
+        {{--Deleted Alert --}}
+        @if (session('deleted'))
+        <div class="alert-success deleted">
+            <span class="alert-icon">✓</span>
+            <span>{{ session('deleted') }}</span>
+            <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+        </div>
+        @endif
+                {{--Edited Alert --}}
+                @if (session('edited'))
+                <div class="alert-success">
+                    <span class="alert-icon">✓</span>
+                    <span>{{ session('edited') }}</span>
+                    <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+                </div>
+                @endif
+                
     <div class="container">
 
         <div class="table-container">

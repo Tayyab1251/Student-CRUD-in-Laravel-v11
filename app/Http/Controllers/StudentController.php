@@ -41,7 +41,7 @@ class StudentController extends Controller
         $isSaved = $student->save();
 
         if ($isSaved) {
-            return redirect('index')->with('success', "{$student->name} Successfully Added!!");
+            return redirect('index')->with('success', "{$student->name} Successfully Added !!");
         } else {
             return 'Operation Failed...';
         }
@@ -69,7 +69,7 @@ class StudentController extends Controller
     {
         $student = Student::destroy($id);
         if ($student) {
-            return redirect('index');
+            return redirect('index')->with('deleted','Successfully Deleted !!');
         } else {
             return redirect('index');
         }
@@ -93,6 +93,7 @@ class StudentController extends Controller
             'fname' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'address' => 'required|string|max:500',
+            'phone' => 'required',
             'gender' => 'required|string|in:male,female,other',
         ]);
 
@@ -102,7 +103,7 @@ class StudentController extends Controller
         $student->name = $validated['name'];
         $student->fname = $validated['fname'];
         $student->email = $validated['email'];
-        $student->phone = $request->phone;
+        $student->phone = $validated['phone'];
         $student->address = $validated['address'];
         $student->gender = $validated['gender'];
 
@@ -110,7 +111,7 @@ class StudentController extends Controller
         $isUpdated = $student->save();
 
         if ($isUpdated) {
-            return redirect()->route('index');
+            return redirect()->route('index')->with('edited',"$student->name Successfully Edited !! ");
         } else {
             return back();
         }
