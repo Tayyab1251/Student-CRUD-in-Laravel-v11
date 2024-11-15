@@ -50,7 +50,7 @@ class StudentController extends Controller
 
     public function getStudents()
     {
-        $students = Student::all();
+        $students = Student::paginate(10);
         // $students = DB::table('students')->get();
         return view('index', ['students' => $students]);
     }

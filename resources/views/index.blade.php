@@ -112,8 +112,9 @@
             background-color: var(--primary-color);
             color: white;
         }
-        .deleted{
-            background-color:#ad5248;
+
+        .deleted {
+            background-color: #ad5248;
             color: #f1f1f1;
         }
 
@@ -224,7 +225,6 @@
             border-color: #c0392b;
         }
 
-        /* Remove underline and link styling for buttons */
         .action-btn:focus {
             outline: none;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
@@ -233,6 +233,22 @@
         .action-btn:active {
             background-color: #333;
         }
+
+        .w-5,
+        .h-5 {
+            width: 20px;
+            height: 20px;
+            color: var(--primary-color);
+            border-radius: 4px;
+            transition: 0.3s ease;
+        }
+
+        .w-5:hover,
+        .h-5:hover {
+            color: white;
+            background-color: var(--primary-color);
+        }
+
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -301,23 +317,23 @@
         <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
     </div>
     @endif
-        {{--Deleted Alert --}}
-        @if (session('deleted'))
-        <div class="alert-success deleted">
-            <span class="alert-icon">✓</span>
-            <span>{{ session('deleted') }}</span>
-            <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
-        </div>
-        @endif
-                {{--Edited Alert --}}
-                @if (session('edited'))
-                <div class="alert-success">
-                    <span class="alert-icon">✓</span>
-                    <span>{{ session('edited') }}</span>
-                    <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
-                </div>
-                @endif
-                
+    {{--Deleted Alert --}}
+    @if (session('deleted'))
+    <div class="alert-success deleted">
+        <span class="alert-icon">✓</span>
+        <span>{{ session('deleted') }}</span>
+        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+    </div>
+    @endif
+    {{--Edited Alert --}}
+    @if (session('edited'))
+    <div class="alert-success">
+        <span class="alert-icon">✓</span>
+        <span>{{ session('edited') }}</span>
+        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+    </div>
+    @endif
+
     <div class="container">
 
         <div class="table-container">
@@ -334,7 +350,8 @@
                 <tbody>
                     @foreach ($students as $student)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $loop->iteration + (($students->currentPage() - 1) * $students->perPage()) }}</td>
+                        {{-- <td>{{ $loop->iteration }}</td> --}}
                         <td>{{ ucwords($student->name) }}</td>
                         <td>{{ $student->gender }}</td>
                         <td>{{ $student->phone }}</td>
@@ -357,6 +374,7 @@
 
             </table>
         </div>
+        {{$students->links()}}
     </div>
 </body>
 
