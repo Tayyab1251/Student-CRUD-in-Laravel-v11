@@ -35,7 +35,6 @@
             letter-spacing: 2px;
         }
 
-        /* Container for Centered Content */
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -105,9 +104,29 @@
         .form-button:hover {
             background-color: darkgreen;
         }
-        .error-msg{
+
+        .cancel-button {
+            width: 100%;
+            padding: 15px;
+            background-color: transparent;
+            color: var(--primary-color);
+            font-weight: 600;
+            border: 1px solid var(--primary-color);
+            border-radius: 6px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .cancel-button:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .error-msg {
             color: red;
-            font-size: 0.875rem; 
+            font-size: 0.875rem;
             margin-top: 0.25rem;
         }
 
@@ -134,17 +153,13 @@
             <div class="form-group">
                 <label for="name">Full Name</label>
                 <input type="text" id="name" name="name" placeholder="Enter full name" value="{{ old('name', $student->name) }}">
-                <span class="error-msg">@error('name')
-                    {{$message}}
-                @enderror</span>
+                <span class="error-msg">@error('name') {{ $message }} @enderror</span>
             </div>
 
             <div class="form-group">
                 <label for="fname">Father's Name</label>
                 <input type="text" id="fname" name="fname" placeholder="Enter father's name" value="{{ old('fname', $student->fname) }}">
-                <span class="error-msg">@error('fname')
-                    {{$message}}
-                @enderror</span>
+                <span class="error-msg">@error('fname') {{ $message }} @enderror</span>
             </div>
 
             <div class="form-group">
@@ -155,36 +170,29 @@
                     <option value="female" {{ old('gender', $student->gender) == 'female' ? 'selected' : '' }}>Female</option>
                     <option value="other" {{ old('gender', $student->gender) == 'other' ? 'selected' : '' }}>Other</option>
                 </select>
-                <span class="error-msg">@error('gender')
-                    {{$message}}
-                @enderror</span>
+                <span class="error-msg">@error('gender') {{ $message }} @enderror</span>
             </div>
 
             <div class="form-group">
                 <label for="email">Email Address</label>
                 <input type="email" id="email" name="email" placeholder="Enter email" value="{{ old('email', $student->email) }}">
-                <span class="error-msg">@error('email')
-                    {{$message}}
-                @enderror</span>
+                <span class="error-msg">@error('email') {{ $message }} @enderror</span>
             </div>
 
             <div class="form-group">
                 <label for="phone">Phone Number</label>
                 <input type="text" id="phone" name="phone" placeholder="Enter phone number" value="{{ old('phone', $student->phone) }}">
-                <span class="error-msg">@error('phone')
-                    {{$message}}
-                @enderror</span>
+                <span class="error-msg">@error('phone') {{ $message }} @enderror</span>
             </div>
 
             <div class="form-group" style="flex: 1 1 100%;">
                 <label for="address">Address</label>
                 <textarea id="address" name="address" placeholder="Enter address">{{ old('address', $student->address) }}</textarea>
-                <span class="error-msg">@error('address')
-                    {{$message}}
-                @enderror</span>
+                <span class="error-msg">@error('address') {{ $message }} @enderror</span>
             </div>
 
             <button type="submit" class="form-button">Update</button>
+            <a href="{{ url()->previous() }}" class="cancel-button">Cancel</a>
         </form>
     </div>
 </body>

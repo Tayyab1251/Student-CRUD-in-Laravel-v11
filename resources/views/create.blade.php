@@ -154,9 +154,9 @@
                 <label for="gender">Gender</label>
                 <select id="gender" name="gender" >
                     <option value="">Select Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
+                    <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
+                    <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
+                    <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
                 </select>
                 <span class="error-msg">@error('gender')
                     {{$message}}
@@ -182,7 +182,7 @@
             <!-- Address -->
             <div class="form-group" style="flex: 1 1 100%;">
                 <label for="address">Address</label>
-                <textarea id="address" name="address" placeholder="Enter your address" value="{{ old('address') }}" ></textarea>
+                <textarea id="address" name="address" placeholder="Enter your address" >{{ old('address') }}</textarea>
                 <span class="error-msg">@error('address')
                     {{$message}}
                 @enderror</span>

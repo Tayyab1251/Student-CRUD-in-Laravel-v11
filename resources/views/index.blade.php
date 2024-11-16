@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Students Information</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    @notifyCss
     <style>
         /* Root CSS Variables for Colors */
         :root {
@@ -72,53 +74,6 @@
             background-color: darkgreen;
             border-color: darkgreen;
         }
-
-        /* Success alert */
-        .alert-success {
-            background-color: rgba(76, 175, 80, 0.15);
-            color: var(--primary-color);
-            padding: 15px 20px;
-            border: 2px solid var(--primary-color);
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            max-width: 600px;
-            margin: 20px auto;
-            box-shadow: 0 4px 10px var(--shadow-light);
-            position: relative;
-        }
-
-        .alert-success .alert-icon {
-            font-size: 1.2rem;
-            color: var(--primary-color);
-        }
-
-        .alert-success .close-btn {
-            background: none;
-            color: var(--primary-color);
-            border: 1px solid var(--primary-color);
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 2px 6px;
-            margin-left: auto;
-            transition: background-color 0.2s, color 0.2s;
-        }
-
-        .alert-success .close-btn:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .deleted {
-            background-color: #ad5248;
-            color: #f1f1f1;
-        }
-
-
         /* Container for Centered Content */
         .container {
             max-width: 1200px;
@@ -203,7 +158,6 @@
         /* Edit Button */
         .edit-btn {
             background-color: #f1c40f;
-            /* Yellow for Edit */
             color: white;
             border-color: #f1c40f;
         }
@@ -233,22 +187,6 @@
         .action-btn:active {
             background-color: #333;
         }
-
-        .w-5,
-        .h-5 {
-            width: 20px;
-            height: 20px;
-            color: var(--primary-color);
-            border-radius: 4px;
-            transition: 0.3s ease;
-        }
-
-        .w-5:hover,
-        .h-5:hover {
-            color: white;
-            background-color: var(--primary-color);
-        }
-
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -303,37 +241,10 @@
 </head>
 
 <body>
-    {{-- {{print_r(session()->all())}} --}}
     <div class="header-container">
         <h1 class="title">Student Information</h1>
-        {{-- <button class="add-btn">Add Student</button> --}}
         <a href="/create " class="add-btn">Add Student</a>
     </div>
-    {{-- Alert --}}
-    @if (session('success'))
-    <div class="alert-success">
-        <span class="alert-icon">✓</span>
-        <span>{{ session('success') }}</span>
-        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
-    </div>
-    @endif
-    {{--Deleted Alert --}}
-    @if (session('deleted'))
-    <div class="alert-success deleted">
-        <span class="alert-icon">✓</span>
-        <span>{{ session('deleted') }}</span>
-        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
-    </div>
-    @endif
-    {{--Edited Alert --}}
-    @if (session('edited'))
-    <div class="alert-success">
-        <span class="alert-icon">✓</span>
-        <span>{{ session('edited') }}</span>
-        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
-    </div>
-    @endif
-
     <div class="container">
 
         <div class="table-container">
@@ -351,9 +262,8 @@
                     @foreach ($students as $student)
                     <tr>
                         <td>{{ $loop->iteration + (($students->currentPage() - 1) * $students->perPage()) }}</td>
-                        {{-- <td>{{ $loop->iteration }}</td> --}}
                         <td>{{ ucwords($student->name) }}</td>
-                        <td>{{ $student->gender }}</td>
+                        <td>{{ ucfirst($student->gender) }}</td>
                         <td>{{ $student->phone }}</td>
                         <td>
                             <div class="action-links">
@@ -374,8 +284,11 @@
 
             </table>
         </div>
-        {{$students->links()}}
+       <div class="mt-4"> {{$students->links('pagination::bootstrap-5')}}</div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <x-notify::notify />
+    @notifyJs
 </body>
 
 </html>

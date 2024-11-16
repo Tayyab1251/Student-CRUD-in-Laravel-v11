@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -16,17 +15,22 @@ class StudentController extends Controller
     public function createStudent(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'fname' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'address' => 'required|string|max:500',
+            'name' => 'required|string|max:50',
+            'fname' => 'required|string|max:50',
             'gender' => 'required|string|in:male,female,other',
+            'email' => 'required|email|max:100',
+            'phone' => 'required|numeric|digits:11',
+            'address' => 'required|string|max:160',
         ],[
             'name.required' => 'The name field is required.',
             'fname.required' => 'The father’s name field is required.',
-            'email.required' => 'The email field is required.',
-            'address.required' => 'The address field is required.',
             'gender.required' => 'Please select a gender.',
+            'email.required' => 'The email field is required.',
+            'phone.required' => 'The phone number is required.',
+            'phone.numeric' => 'The phone number must contain only numbers.',
+            'phone.digits' => 'The phone number must be exactly 11 digits.',
+            'address.required' => 'The address field is required.',
+            'address.max' => 'The max length of address is 160 characters.',
         ]);
 
         // Create a new student instance
@@ -41,17 +45,18 @@ class StudentController extends Controller
         $isSaved = $student->save();
 
         if ($isSaved) {
-            return redirect('index')->with('success', "{$student->name} Successfully Added !!");
+            notify('success', $student->name .' successfully added');
+            return redirect('index'); 
         } else {
-            return 'Operation Failed...';
+            notify('success', $student->name .' Operation Failed !');
+            return redirect('index'); 
         }
     }
     // Function that returns all the records
 
     public function getStudents()
     {
-        $students = Student::paginate(10);
-        // $students = DB::table('students')->get();
+        $students = Student::paginate(5);
         return view('index', ['students' => $students]);
     }
 
@@ -69,8 +74,10 @@ class StudentController extends Controller
     {
         $student = Student::destroy($id);
         if ($student) {
-            return redirect('index')->with('deleted','Successfully Deleted !!');
+            notify('success','Successfully deleted');
+            return redirect('index');
         } else {
+            notify('success',' Operation Failed !');
             return redirect('index');
         }
     }
@@ -89,12 +96,12 @@ class StudentController extends Controller
     {
         // Validate the incoming data
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'fname' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'address' => 'required|string|max:500',
-            'phone' => 'required',
+            'name' => 'required|string|max:50',
+            'fname' => 'required|string|max:50',
             'gender' => 'required|string|in:male,female,other',
+            'email' => 'required|email|max:100',
+            'phone' => 'required|numeric|digits:15',
+            'address' => 'required|string|max:160',
         ]);
 
         // Find the student by ID
@@ -111,8 +118,10 @@ class StudentController extends Controller
         $isUpdated = $student->save();
 
         if ($isUpdated) {
-            return redirect()->route('index')->with('edited',"$student->name Successfully Edited !! ");
+            notify('success', $student->name .' successfully edited ');
+            return redirect()->route('index');
         } else {
+            notify('success', $student->name .' Failed to edit ');
             return back();
         }
     }

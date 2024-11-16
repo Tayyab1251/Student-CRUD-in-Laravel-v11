@@ -215,11 +215,11 @@
                     <h2>{{$student->name}}</h2>
                     <p>{{$student->fname}}'s Son/Daughter</p>
                 </div>
-                <!-- Dummy Image -->
+                <!-- Avatar Images -->
                 @if($student->gender == 'male')
-                <img src="https://via.placeholder.com/120/0000FF/FFFFFF?text=Male" alt="Male Avatar">
+                <img src="https://img.freepik.com/free-photo/3d-illustration-cute-little-boy-with-backpack-city_1142-57375.jpg?t=st=1731654493~exp=1731658093~hmac=2003a4473a4bfcfbd2483e0007fc21d6749e2ed9c3be226a9400dd89a6dcee84&w=740" alt="Male Avatar">
                 @elseif($student->gender == 'female')
-                <img src="https://via.placeholder.com/120/FF69B4/FFFFFF?text=Female" alt="Female Avatar">
+                <img src="https://img.freepik.com/free-photo/3d-illustration-cute-cartoon-girl-baseball-cap_1142-39090.jpg?t=st=1731654582~exp=1731658182~hmac=a72a58cffd04fa8ac47a1def03c27813e0514080f9a2337d340756e93357e975&w=740" alt="Female Avatar">
                 @else
                 <img src="https://via.placeholder.com/120/808080/FFFFFF?text=Other" alt="Other Avatar">
                 @endif
